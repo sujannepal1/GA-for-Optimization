@@ -53,7 +53,12 @@ print(f"Lowest fitness value: {min_fitness}")
 index_of_highest = highest_value.index(max_fitness)
 index_of_lowest = highest_value.index(min_fitness)
 random_indexes = [random.choice(range(POPULATION_SIZE)) for _ in range(2)]
-final_indexes_for_crossover = [index_of_highest, index_of_lowest] + random_indexes
+
+final_indexes_for_crossover = [
+    index_of_highest,
+    index_of_highest,
+    index_of_lowest,
+] + random_indexes
 print(f"Indexes selected for crossover: {final_indexes_for_crossover}")
 
 # now two point crossover
