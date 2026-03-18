@@ -21,6 +21,10 @@ def convert_to_binary(value: int) -> str:
     return format(value, "04b")
 
 
+def to_decimal(b):
+    return int(b, 2)
+
+
 for i in range(len(initial_population)):
     x, y, z = initial_population[i]
     binary_x = convert_to_binary(x)
