@@ -25,12 +25,14 @@ def to_decimal(b):
     return int(b, 2)
 
 
+chromosomes = []
 for i in range(len(initial_population)):
     x, y, z = initial_population[i]
     binary_x = convert_to_binary(x)
     binary_y = convert_to_binary(y)
     binary_z = convert_to_binary(z)
     chromosome = binary_x + binary_y + binary_z
+    chromosomes.append(chromosome)
     print(f"Individual {i + 1}: x={x}, y={y}, z={z}, Chromosome: {chromosome}")
 
 POPULATION_SIZE = len(initial_population)
@@ -65,4 +67,22 @@ final_indexes_for_crossover = [
 ] + random_indexes
 print(f"Indexes selected for crossover: {final_indexes_for_crossover}")
 
+
 # now two point crossover
+def two_point_crossover(parent1: str, parent2: str):
+    point1 = random.randint(1, len(parent1) - 4)
+    point2 = random.randint(point1 + 1, len(parent1) - 1)
+    child1 = parent1[:point1] + parent2[point1:point2] + parent1[point2:]
+    child2 = parent2[:point1] + parent1[point1:point2] + parent2[point2:]
+    return child1, child2
+
+
+new = []
+
+for i in initial_population:
+    x, y, z = i
+    binary_x = convert_to_binary(x)
+    binary_y = convert_to_binary(y)
+    binary_z = convert_to_binary(z)
+    chromosome = binary_x + binary_y + binary_z
+    new.append(chromosome)
