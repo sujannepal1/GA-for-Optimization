@@ -91,6 +91,12 @@ def mutate(chromosome: str, mutation_rate: float) -> str:
         if random.random() < mutation_rate:
             new_gene = "1" if gene == "0" else "0"
             new_chromosome += new_gene
+            print(
+                "Mutation occurred at chromosome:"
+                + chromosome
+                + " -> "
+                + new_chromosome
+            )
         else:
             new_chromosome += gene
     return new_chromosome
@@ -112,8 +118,12 @@ for i in range(0, len(new_population_chromosomes), 2):
     parent1 = new_population_chromosomes[i]
     parent2 = new_population_chromosomes[i + 1]
     child1, child2 = two_point_crossover(parent1, parent2)
+    child1 = mutate(child1, 0.1)
+    child2 = mutate(child2, 0.1)
     offspring.append(child1)
     offspring.append(child2)
+
+
 print("Offspring after crossover:")
 for i in range(len(offspring)):
     print(f"Offspring {i + 1}: Chromosome: {offspring[i]}")
