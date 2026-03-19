@@ -84,12 +84,12 @@ def two_point_crossover(parent1: str, parent2: str):
     return child1, child2
 
 
-new = []
+new_population_chromosomes = []
 
-for i in initial_population:
+for i in new_population:
     x, y, z = i
     binary_x = convert_to_binary(x)
     binary_y = convert_to_binary(y)
     binary_z = convert_to_binary(z)
     chromosome = binary_x + binary_y + binary_z
-    new.append(chromosome)
+    new_population_chromosomes.append(chromosome)
