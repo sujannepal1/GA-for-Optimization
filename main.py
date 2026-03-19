@@ -93,3 +93,15 @@ for i in new_population:
     binary_z = convert_to_binary(z)
     chromosome = binary_x + binary_y + binary_z
     new_population_chromosomes.append(chromosome)
+
+
+offspring = []
+for i in range(0, len(new_population_chromosomes), 2):
+    parent1 = new_population_chromosomes[i]
+    parent2 = new_population_chromosomes[i + 1]
+    child1, child2 = two_point_crossover(parent1, parent2)
+    offspring.append(child1)
+    offspring.append(child2)
+print("Offspring after crossover:")
+for i in range(len(offspring)):
+    print(f"Offspring {i + 1}: Chromosome: {offspring[i]}")
