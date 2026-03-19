@@ -69,10 +69,10 @@ print(f"Indexes selected for crossover: {final_indexes_for_crossover}")
 
 new_population = []
 for i in final_indexes_for_crossover:
-    new_population.append(chromosomes[i])
-print("Selected chromosomes for crossover:")
+    new_population.append(initial_population[i])
+print("Selected population for crossover:")
 for i in range(len(new_population)):
-    print(f"Individual {i + 1}: Chromosome: {new_population[i]}")
+    print(f"Individual {i + 1}: population: {new_population[i]}")
 
 
 # now two point crossover
