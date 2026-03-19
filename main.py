@@ -127,3 +127,13 @@ for i in range(0, len(new_population_chromosomes), 2):
 print("Offspring after crossover:")
 for i in range(len(offspring)):
     print(f"Offspring {i + 1}: Chromosome: {offspring[i]}")
+
+
+# calculate fitness of offspring
+for i in range(len(offspring)):
+    child = offspring[i]
+    x = to_decimal(child[:4])
+    y = to_decimal(child[4:8])
+    z = to_decimal(child[8:])
+    fitness = fitness_function(x, y, z)
+    print(f"Offspring {i + 1}: x={x}, y={y}, z={z}, Fitness: {fitness}")
