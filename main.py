@@ -84,6 +84,18 @@ def two_point_crossover(parent1: str, parent2: str):
     return child1, child2
 
 
+# mutation
+def mutate(chromosome: str, mutation_rate: float) -> str:
+    new_chromosome = ""
+    for gene in chromosome:
+        if random.random() < mutation_rate:
+            new_gene = "1" if gene == "0" else "0"
+            new_chromosome += new_gene
+        else:
+            new_chromosome += gene
+    return new_chromosome
+
+
 new_population_chromosomes = []
 
 for i in new_population:
