@@ -30,8 +30,8 @@ def convert_to_binary(value: int) -> str:
     return format(value, "04b")
 
 
-def to_decimal(b):
-    return int(b, 2)
+def to_decimal(binary_string: str) -> int:
+    return int(binary_string, base=2)
 
 
 def fitness_function(x: int, y: int, z: int) -> int:
