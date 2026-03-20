@@ -1,11 +1,18 @@
 # function to optimize F = x**2+y**2-2*z**2+5*x*y*z+7
 import random
 
+ROLL_NUMBER = "25001"
 
-A = 1
-B = 1
-C = 1
-D = 1
+
+def get_digit_from_roll_number(roll_number, position) -> int:
+    return int(str(roll_number)[position])
+
+
+A = get_digit_from_roll_number(ROLL_NUMBER, -4)
+B = get_digit_from_roll_number(ROLL_NUMBER, -3)
+C = get_digit_from_roll_number(ROLL_NUMBER, -2)
+D = get_digit_from_roll_number(ROLL_NUMBER, -1)
+
 initial_population = [
     [0, A, 4],
     [2, 1, 2],
