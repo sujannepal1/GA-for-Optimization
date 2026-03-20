@@ -48,7 +48,7 @@ def evolve_population(initial_population):
         chromosome = binary_x + binary_y + binary_z
         chromosomes.append(chromosome)
         print(f"Individual {i + 1}: x={x}, y={y}, z={z}, Chromosome: {chromosome}")
-
+    print("\n")
     POPULATION_SIZE = len(initial_population)
 
     # finding the fitness of each individual in the population
@@ -64,6 +64,15 @@ def evolve_population(initial_population):
     min_fitness = min(highest_value)
     print(f"Highest fitness value: {max_fitness}")
     print(f"Lowest fitness value: {min_fitness}")
+
+    total_fitness = sum(highest_value)
+    print(f"Total fitness of the population: {total_fitness}")
+    # relative fitness
+    relative_fitness = [fitness / total_fitness for fitness in highest_value]
+    print("\n Relative fitness of each individual:")
+    for i in range(POPULATION_SIZE):
+        print(f"Individual {i + 1}: Relative Fitness: {relative_fitness[i]}")
+    print("\n")
 
     index_of_highest = highest_value.index(max_fitness)
     index_of_lowest = highest_value.index(min_fitness)
