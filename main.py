@@ -62,7 +62,8 @@ def evolve_population(initial_population):
 
     max_fitness = max(highest_value)
     min_fitness = min(highest_value)
-    print(f"Highest fitness value: {max_fitness}")
+
+    print(f"\n Highest fitness value: {max_fitness}")
     print(f"Lowest fitness value: {min_fitness}")
 
     total_fitness = sum(highest_value)
