@@ -144,6 +144,7 @@ def evolve_population(initial_population):
 
     # calculate fitness of offspring
     final_population = []
+    print("\n Fitness of Offspring:")
     for i in range(len(offspring)):
         child = offspring[i]
         x = to_decimal(child[:4])
@@ -153,24 +154,26 @@ def evolve_population(initial_population):
         final_population.append((x, y, z))
         print(f"Offspring {i + 1}: x={x}, y={y}, z={z}, Fitness: {fitness}")
 
+    print("\n")
     return final_population
 
 
-for i in range(2):
-    final_pop = evolve_population(initial_population)
-    final_pop = evolve_population(final_pop)
-    final_pop = evolve_population(final_pop)
+final_pop = evolve_population(initial_population)
+print("\n Evolving population for the second time...\n")
+final_pop = evolve_population(final_pop)
+print("\n Evolving population for the third time...\n")
+final_pop = evolve_population(final_pop)
 
-    fitness_value = []
-    for individual in final_pop:
-        x, y, z = individual
-        fitness = fitness_function(x, y, z)
-        fitness_value.append(fitness)
-        print(f"Final Individual: x={x}, y={y}, z={z}, Fitness: {fitness}")
+fitness_value = []
+for individual in final_pop:
+    x, y, z = individual
+    fitness = fitness_function(x, y, z)
+    fitness_value.append(fitness)
+    print(f"Final Individual: x={x}, y={y}, z={z}, Fitness: {fitness}")
 
-    max_fitness = max(fitness_value)
-    index_of_max_fitness = fitness_value.index(max_fitness)
-    best_individual = final_pop[index_of_max_fitness]
-    print(
-        f"Best Individual: x={best_individual[0]}, y={best_individual[1]}, z={best_individual[2]}, Fitness: {max_fitness}"
-    )
+max_fitness = max(fitness_value)
+index_of_max_fitness = fitness_value.index(max_fitness)
+best_individual = final_pop[index_of_max_fitness]
+print(
+    f"Best Individual: x={best_individual[0]}, y={best_individual[1]}, z={best_individual[2]}, Fitness: {max_fitness}"
+)
