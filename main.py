@@ -38,6 +38,68 @@ def fitness_function(x: int, y: int, z: int) -> int:
     return x**2 + y**2 - 2 * z**2 + 5 * x * y * z + 7
 
 
+class Mutation:
+    def __init__(self, mutation_rate: float = 0.1):
+        self.mutation_rate = mutation_rate
+
+    def mutate(self, chromosome: str) -> str:
+        new_chromosome = ""
+        mutated = False
+        for gene in chromosome:
+            if random.random() < self.mutation_rate:
+                new_chromosome += "1" if gene == "0" else "0"
+                mutated = True
+            else:
+                new_chromosome += gene
+        if mutated:
+            print(
+                "Mutation occurred at chromosome:"
+                + chromosome
+                + " -> "
+                + new_chromosome
+            )
+        return new_chromosome
+
+
+class Crossover:
+    def two_point_crossover(self, parent1: str, parent2: str) -> tuple:
+        point1 = random.randint(1, len(parent1) - 4)
+        point2 = random.randint(point1 + 1, len(parent1) - 1)
+        child1 = parent1[:point1] + parent2[point1:point2] + parent1[point2:]
+        child2 = parent2[:point1] + parent1[point1:point2] + parent2[point2:]
+        return child1, child2
+
+
+class PopulationSelection:
+    def __init__(self, num_random: int = 3):
+        self.num_random = num_random
+
+    def select(self, population: list, fitness_values: list) -> list:
+        population_size = len(population)
+        max_fitness = max(fitness_values)
+        min_fitness = min(fitness_values)
+
+        index_of_highest = fitness_values.index(max_fitness)
+        index_of_lowest = fitness_values.index(min_fitness)
+        random_indexes = [
+            random.randrange(population_size) for _ in range(self.num_random)
+        ]
+
+        selected_indexes = [
+            index_of_highest,
+            index_of_highest,
+            index_of_lowest,
+        ] + random_indexes
+        print(f"Indexes selected for crossover: {selected_indexes}")
+
+        selected_population = [population[i] for i in selected_indexes]
+        print("Selected population for crossover:")
+        for i, individual in enumerate(selected_population):
+            print(f"Individual {i + 1}: population: {individual}")
+
+        return selected_population
+
+
 def evolve_population(initial_population):
     chromosomes = []
     for i in range(len(initial_population)):
@@ -75,51 +137,10 @@ def evolve_population(initial_population):
         print(f"Individual {i + 1}: Relative Fitness: {relative_fitness[i]}")
     print("\n")
 
-    index_of_highest = highest_value.index(max_fitness)
-    index_of_lowest = highest_value.index(min_fitness)
-    random_indexes = [random.choice(range(POPULATION_SIZE)) for _ in range(3)]
-
-    final_indexes_for_crossover = [
-        index_of_highest,
-        index_of_highest,
-        index_of_lowest,
-    ] + random_indexes
-    print(f"Indexes selected for crossover: {final_indexes_for_crossover}")
-
-    new_population = []
-    for i in final_indexes_for_crossover:
-        new_population.append(initial_population[i])
-    print("Selected population for crossover:")
-    for i in range(len(new_population)):
-        print(f"Individual {i + 1}: population: {new_population[i]}")
-
-    # now two point crossover
-    def two_point_crossover(parent1: str, parent2: str):
-        point1 = random.randint(1, len(parent1) - 4)
-        point2 = random.randint(point1 + 1, len(parent1) - 1)
-        child1 = parent1[:point1] + parent2[point1:point2] + parent1[point2:]
-        child2 = parent2[:point1] + parent1[point1:point2] + parent2[point2:]
-        return child1, child2
-
-    # mutation
-    def mutate(chromosome: str, mutation_rate: float) -> str:
-        new_chromosome = ""
-        for gene in chromosome:
-            if random.random() < mutation_rate:
-                new_gene = "1" if gene == "0" else "0"
-                new_chromosome += new_gene
-                print(
-                    "Mutation occurred at chromosome:"
-                    + chromosome
-                    + " -> "
-                    + new_chromosome
-                )
-            else:
-                new_chromosome += gene
-        return new_chromosome
+    selector = PopulationSelection(num_random=3)
+    new_population = selector.select(initial_population, highest_value)
 
     new_population_chromosomes = []
-
     for i in new_population:
         x, y, z = i
         binary_x = convert_to_binary(x)
@@ -128,13 +149,16 @@ def evolve_population(initial_population):
         chromosome = binary_x + binary_y + binary_z
         new_population_chromosomes.append(chromosome)
 
+    crossover = Crossover()
+    mutation = Mutation(mutation_rate=0.1)
+
     offspring = []
     for i in range(0, len(new_population_chromosomes), 2):
         parent1 = new_population_chromosomes[i]
         parent2 = new_population_chromosomes[i + 1]
-        child1, child2 = two_point_crossover(parent1, parent2)
-        child1 = mutate(child1, 0.1)
-        child2 = mutate(child2, 0.1)
+        child1, child2 = crossover.two_point_crossover(parent1, parent2)
+        child1 = mutation.mutate(child1)
+        child2 = mutation.mutate(child2)
         offspring.append(child1)
         offspring.append(child2)
 
