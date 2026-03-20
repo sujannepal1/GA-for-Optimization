@@ -13,6 +13,8 @@ B = get_digit_from_roll_number(ROLL_NUMBER, -3)
 C = get_digit_from_roll_number(ROLL_NUMBER, -2)
 D = get_digit_from_roll_number(ROLL_NUMBER, -1)
 
+print(f"A: {A}, B: {B}, C: {C}, D: {D}")
+
 initial_population = [
     [0, A, 4],
     [2, 1, 2],
